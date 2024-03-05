@@ -1,0 +1,13 @@
+<h1>All Events</h1>
+<% if(Object.keys(events).length===0){ %>
+    Sorry, no events
+    <% } else { %>
+        <% for( let event of events){ %>
+            <div>
+                <a href="<%= event._id %>">
+                    <%= event.name %>
+                </a>
+            </div>
+            <% } %>
+                <% } %>
+                    <a href="/new">New event</a>

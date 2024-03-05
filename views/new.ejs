@@ -1,0 +1,14 @@
+<h1>Creat new event</h1>
+<form action="/new" method="POST">
+    <label for="name">Event Name</label>
+    <input type="text" name="name" id="name" placeholder="Event Name">
+    <label for="description">description</label>
+    <textarea name="description" id="description" cols="30" rows="10"></textarea>
+    <label for="start-time">Start Time</label>
+    <input type="datetime-local" name="start-time" id="start-time">
+    <label for="end-time">End Time</label>
+    <input type="datetime-local" name="end-time" id="end-time">
+    <input type="submit" value="Submit">
+</form>
+
+<a href="/">All Events</a>
