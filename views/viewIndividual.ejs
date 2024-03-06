@@ -4,11 +4,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>
+        <%= event.name %>
+    </title>
 </head>
 
 <body>
-
+    <h1>
+        <%= event.name %>
+    </h1>
+    <div>Start time: <%= event.startTime %>
+    </div>
+    <div>End time: <%= event.endTime %>
+    </div>
+    <div>
+        <div>Description</div>
+        <%= event.description %>
+    </div>
+    <a href="/">All Events</a>
+    <a href="/<%= event._id %>/edit">Edit Event</a>
 </body>
 
 </html>

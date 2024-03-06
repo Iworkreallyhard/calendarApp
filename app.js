@@ -33,9 +33,26 @@ app.post('/new', async (req, res) => {
 
 app.get('/:id', async (req, res) => {
     const { id } = req.params
-    console.log(id)
-    res.send('view event')
+    const event = await Event.findById(id)
+    res.render('viewIndividual', { event })
 })
+
+app.get('/:id/edit', async (req, res) => {
+    const { id } = req.params
+    const event = await Event.findById(id)
+
+    res.render('edit', { event })
+    formatTime(event.startTime)
+})
+
+let formatTime = function (time) {
+    let dateNow = new Date(time)
+    console.log(dateNow)
+    console.log(dateNow.toLocaleDateString())
+    let test = Date.parse(time)
+    //let testString = test.toLocaleDateString();
+    console.log(typeof test)
+}
 
 app.listen(port, () => {
     console.log(`App listening on port ${port}`)
