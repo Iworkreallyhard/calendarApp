@@ -13,9 +13,13 @@
     <h1>
         <%= event.name %>
     </h1>
-    <div>Start time: <%= event.startTime %>
+    <div>Start time: <%= `${event.start.hour}:${event.start.minute}` %>
+            <div>Start Date: <%= `${event.start.date}/${event.start.month}/${event.start.year}` %>
+            </div>
     </div>
-    <div>End time: <%= event.endTime %>
+    <div>End time: <%= `${event.end.hour}:${event.end.minute}` %>
+            <div>Start Date: <%= `${event.end.date}/${event.end.month}/${event.end.year}` %>
+            </div>
     </div>
     <div>
         <div>Description</div>
@@ -23,6 +27,9 @@
     </div>
     <a href="/">All Events</a>
     <a href="/<%= event._id %>/edit">Edit Event</a>
+    <form action="/<%= event._id %>?_method=DELETE" method="post">
+        <button type="submit">Delete</button>
+    </form>
 </body>
 
 </html>

@@ -1,21 +1,65 @@
-<h1>Edit <%= event.name %>
-</h1>
-<form action="/new" method="POST">
-    <div><label for="name">Event Name</label>
-        <input type="text" name="name" id="name" placeholder="Event Name">
-    </div>
-    <div><label for="description">description</label><br>
-        <textarea name="description" id="description" cols="30" rows="10"></textarea>
-    </div>
-    <div><label for="start-time">Start Time</label>
-        <input type="datetime-local" name="start-time" id="start-time" value="<%= event.startTime %>">
-    </div>
-    <div><label for="end-time">End Time</label>
-        <input type="datetime-local" name="end-time" id="end-time">
-    </div>
+<!DOCTYPE html>
+<html lang="en">
 
-    <input type="submit" value="Save">
-</form>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
 
-<a href="/">All Events</a><a href="">Revert</a>
-<form action="/<%= event._id %>/edit" method="post"></form>
+<body>
+    <h1>Edit <%= event.name %>
+    </h1>
+    <form action="/<%= event._id %>?_method=PUT" method="POST">
+        <label for="name">Event Name</label>
+        <input type="text" name="name" id="name" placeholder="Event Name" value="<%= event.name %>">
+        <label for="description">description</label>
+        <textarea name="description" id="description" cols="30" rows="10"><%= event.description %></textarea>
+        <div class="start-data">start time:
+            <div class="start date" id="start-date">
+                <input type="number" name="start.date" id="start-date" min="1" max="31" placeholder="date"
+                    value="<%= event.start.date %>">
+                <input type="number" name="start.month" id="start-month" min="1" max="12" placeholder="month"
+                    value="<%= event.start.month %>">
+                <input type="number" name="start.year" id="start-year" min="1900" placeholder="year"
+                    value="<%= event.start.year %>">
+
+
+            </div>
+            <div class="start time" id="start-time">
+                <input type="number" name="start.hour" id="start-hour" min="0" max="23" placeholder="hour"
+                    value="<%= event.start.hour %>">
+                <input type="number" name="start.minute" id="start-minute" min="0" max="59" placeholder="minute"
+                    value="<%= event.start.minute %>">
+            </div>
+        </div>
+
+        <div class="end-data">
+            end time:
+            <div class="end date" id="end-date">
+                <input type="number" name="end.date" id="end-date" min="1" max="31" placeholder="date"
+                    value="<%= event.end.date %>">
+                <input type="number" name="end.month" id="end-month" min="1" max="12" placeholder="month"
+                    value="<%= event.end.month %>">
+                <input type="number" name="end.year" id="end-year" min="1900" placeholder="year"
+                    value="<%= event.end.year %>">
+
+
+            </div>
+            <div class="end time" id="end-time">
+                <input type="number" name="end.hour" id="end-hour" min="0" max="23" placeholder="hour"
+                    value="<%= event.end.hour %>">
+                <input type="number" name="end.minute" id="end-minute" min="0" max="59" placeholder="minute"
+                    value="<%= event.end.minute %>">
+            </div>
+        </div>
+        <input type="submit" value="Submit">
+    </form>
+
+    <a href="/">All Events</a>
+    <form action="/<%= event._id %>/edit" method="post"></form>
+
+
+</body>
+
+</html>
