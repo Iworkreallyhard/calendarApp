@@ -22,14 +22,19 @@ app.get('/', async (req, res) => {
 })
 
 app.get('/new', (req, res) => {
-    res.render('new')
+    const dateNow = new Date()
+    res.render('new', { dateNow })
 })
 
 app.post('/new', async (req, res) => {
     console.log(req.body)
     let event = new Event(req.body)
     await event.save()
-    res.redirect('/new')
+    res.redirect(`/${event._id}`)
+})
+
+app.get('/calendar', (req, res) => {
+    res.render('calendarView')
 })
 
 app.get('/:id', async (req, res) => {
@@ -47,6 +52,7 @@ app.get('/:id/edit', async (req, res) => {
 
 app.put('/:id', async (req, res) => {
     const { id } = req.params
+    req.body = calculateDate(req.body)
     const event = await Event.findByIdAndUpdate(id, req.body, { runValidators: true, new: true })
     res.redirect(`/${id}`)
 })
@@ -57,15 +63,11 @@ app.delete('/:id', async (req, res) => {
     res.redirect('/')
 })
 
-// let formatTime = function (time) {
-//     let dateNow = new Date(time)
-//     console.log(dateNow)
-//     console.log(dateNow.toLocaleDateString())
-//     let dateTimeString = `${dateNow.getFullYear()}-${dateNow.getMonth()}-${dateNow.getDate()}T${dateNow.getHours()}:${dateNow.getMinutes()}`
-//     console.log(dateTimeString)
-//     console.log(typeof test)
-//     return dateTimeString
-// }
+let calculateDate = function (body) {
+    body.start.calculated = `${body.start.year}-${body.start.month}-${body.start.date}T${body.start.hour}:${body.start.minute}`
+    body.end.calculated = `${body.end.year}-${body.end.month}-${body.end.date}T${body.end.hour}:${body.end.minute}`
+    return body;
+}
 
 app.listen(port, () => {
     console.log(`App listening on port ${port}`)

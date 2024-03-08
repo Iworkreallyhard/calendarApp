@@ -9,14 +9,16 @@ const eventSchema = new Schema({
         month: Number,
         date: Number,
         hour: Number,
-        minute: Number
+        minute: Number,
+        calculated: Date
     },
     end: {
         year: Number,
         month: Number,
         date: Number,
         hour: Number,
-        minute: Number
+        minute: Number,
+        calculated: Date
     }
 })
 const Event = mongoose.model('Event', eventSchema)
