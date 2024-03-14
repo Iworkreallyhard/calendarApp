@@ -2,10 +2,6 @@ let month //goes from 1-12
 let year
 let desiredFirstOfMonth //goes from 1 - 7
 let daysInMonth
-let count = 1
-const months = {
-    jan: 'Jan'
-}
 
 let getFirstDayOfMonth = function () {
     let day = new Date(`${year}-${month}-1`);
@@ -29,7 +25,7 @@ let setDays = function () {
         if (date > daysInMonth) {
             break
         }
-        dayEls[i - 1].innerHTML = date
+        dayEls[i - 1].innerHTML = date //date starts at 1, but first element is 0, so need to take off 1 to get it to the right place
         date++;
     }
 }
@@ -52,7 +48,7 @@ selectedMonth.addEventListener('change', function (e) {
 
 let setup = function () {
     let today = new Date()
-    month = today.getMonth() + 1
+    month = today.getMonth() + 1 //date format month goes from 0-11. add 1 so it goes from 1-12
     year = today.getFullYear()
     setDays()
 }

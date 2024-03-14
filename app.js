@@ -12,11 +12,10 @@ mongoose.connect('mongodb://127.0.0.1:27017/calendarApp');
 
 app.set('view engine', 'ejs')
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static('public'))
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'))
 
 app.get('/', async (req, res) => {
-    //res.send('Hello World!')
     const events = await Event.find();
     res.render('show', { events })
 })
@@ -27,7 +26,7 @@ app.get('/new', (req, res) => {
 })
 
 app.post('/new', async (req, res) => {
-    console.log(req.body)
+    req.body = calculateDate(req.body)
     let event = new Event(req.body)
     await event.save()
     res.redirect(`/${event._id}`)
@@ -35,6 +34,14 @@ app.post('/new', async (req, res) => {
 
 app.get('/calendar', (req, res) => {
     res.render('calendarView')
+})
+
+app.get('/day/:date', (req, res) => {
+    const { date } = req.params
+    const dateChange = new Date(date)
+    //let eventOnDay = Event.find()
+    //res.send('dayView')
+    res.render('dayView')
 })
 
 app.get('/:id', async (req, res) => {
@@ -46,7 +53,6 @@ app.get('/:id', async (req, res) => {
 app.get('/:id/edit', async (req, res) => {
     const { id } = req.params
     const event = await Event.findById(id)
-
     res.render('edit', { event })
 })
 
@@ -64,8 +70,8 @@ app.delete('/:id', async (req, res) => {
 })
 
 let calculateDate = function (body) {
-    body.start.calculated = `${body.start.year}-${body.start.month}-${body.start.date}T${body.start.hour}:${body.start.minute}`
-    body.end.calculated = `${body.end.year}-${body.end.month}-${body.end.date}T${body.end.hour}:${body.end.minute}`
+    body.startTime = new Date(body['start.year'], body['start.month'] - 1, body['start.date'], body['start.hour'], body['start.minute'])
+    body.endTime = new Date(body['end.year'], body['end.month'] - 1, body['end.date'], body['end.hour'], body['end.minute'])
     return body;
 }
 
