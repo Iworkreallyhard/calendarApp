@@ -15,11 +15,20 @@
         <table>
             <tbody>
                 <% for(let i=0; i< 24; i++){ %>
-                    <tr class="row<%= i  %>">
+                    <tr class="hour<%= i  %>">
                         <td>
                             <%= i %>:00
                         </td>
-                        <td>Event</td>
+                        <% for(let event of eventsOnDay){ %>
+                            <% if(event.startTime.getHours()===i){ %>
+                                <td>
+                                    <a href="/<%= event._id %>">
+                                        <%= event.name %>
+                                    </a>
+
+                                </td>
+                                <% } %>
+                                    <% } %>
                     </tr>
                     <% } %>
             </tbody>

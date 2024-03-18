@@ -17,6 +17,8 @@ app.use(methodOverride('_method'))
 
 app.get('/', async (req, res) => {
     const events = await Event.find();
+    sortByStartDate(events)
+
     res.render('show', { events })
 })
 
@@ -33,15 +35,28 @@ app.post('/new', async (req, res) => {
 })
 
 app.get('/calendar', (req, res) => {
+    res.redirect('/month/month')
+})
+
+app.get('/month/:month', (req, res) => {
     res.render('calendarView')
 })
 
-app.get('/day/:date', (req, res) => {
+app.get('/day/:date', async (req, res) => {
     const { date } = req.params
-    const dateChange = new Date(date)
-    //let eventOnDay = Event.find()
-    //res.send('dayView')
-    res.render('dayView')
+    const StartDate = new Date(date)
+    const endDate = new Date(StartDate)
+    endDate.setDate(endDate.getDate() + 1)
+    let eventsOnDay = await Event.find({
+        startTime: {
+            $gte: StartDate
+        },
+        endTime: {
+            $lt: endDate
+        }
+    })
+    let eventsOnDaySorted = sortByStartDate(eventsOnDay)
+    res.render('dayView', { eventsOnDay })
 })
 
 app.get('/:id', async (req, res) => {
@@ -73,6 +88,23 @@ let calculateDate = function (body) {
     body.startTime = new Date(body['start.year'], body['start.month'] - 1, body['start.date'], body['start.hour'], body['start.minute'])
     body.endTime = new Date(body['end.year'], body['end.month'] - 1, body['end.date'], body['end.hour'], body['end.minute'])
     return body;
+}
+
+function sortByStartDate(arr) {
+    return arr.sort((a, b) => {
+        // Convert startDate strings to Date objects for comparison
+        const dateA = new Date(a.startTime);
+        const dateB = new Date(b.startTime);
+
+        // Compare the dates
+        if (dateA < dateB) {
+            return -1;
+        } else if (dateA > dateB) {
+            return 1;
+        } else {
+            return 0;
+        }
+    });
 }
 
 app.listen(port, () => {

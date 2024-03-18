@@ -23,7 +23,9 @@
                         <a href="/new">New event</a>
                         <br>
                         <a href="/calendar">calendar</a>
-                        <a href="/day/day">day view</a>
+                        <% let today=new Date() %>
+                            <a href="/day/<%= `${today.getFullYear()}-${today.getMonth()+1}-${today.getDate()}` %>">day
+                                view</a>
 </body>
 
 </html>
