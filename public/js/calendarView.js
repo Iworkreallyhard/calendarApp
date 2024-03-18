@@ -28,7 +28,6 @@ let setDays = function () {
         let dateString = createDateString(date)
         dayEls[i - 1].innerHTML = date //date starts at 1, but first element is 0, so need to take off 1 to get it to the right place
         dayEls[i - 1].setAttribute('href', `/day/${dateString}`)
-        //dayEls[i - 1].setAttribute('class', 'check')
         date++;
     }
 }

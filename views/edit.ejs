@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-
-<body>
+<% layout('templates/boilerplate') %>
     <h1>Edit <%= event.name %>
     </h1>
     <form action="/<%= event._id %>?_method=PUT" method="POST">
@@ -57,8 +48,3 @@
     </form>
 
     <a href="/">All Events</a><a href="/<%= event._id %>">Back to event</a>
-
-
-</body>
-
-</html>
