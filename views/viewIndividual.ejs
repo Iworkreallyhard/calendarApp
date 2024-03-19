@@ -11,7 +11,6 @@
         <div>Description</div>
         <%= event.description %>
     </div>
-    <a href="/">All Events</a>
     <a href="/<%= event._id %>/edit">Edit Event</a>
     <form action="/<%= event._id %>?_method=DELETE" method="post">
         <button type="submit">Delete</button>
