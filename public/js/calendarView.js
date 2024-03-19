@@ -45,10 +45,20 @@ let createDateString = function (date) {
     return dateString
 }
 
+let createMonthString = function () {
+    let dateString = `${year}-`
+    if (month < 10) {
+        dateString += `0`
+    }
+    dateString += `${month}`
+    return dateString
+}
+
 let clearDays = function () {
-    let dayEls = document.querySelectorAll('.day');
+    let dayEls = document.querySelectorAll('.day-anchor');
     for (let day of dayEls) {
         day.innerHTML = ''
+        day.setAttribute('href', '')
     }
 }
 
@@ -57,24 +67,20 @@ selectedMonth.addEventListener('change', function (e) {
     let selectedMonthSplit = selectedMonth.value.split('-')
     year = parseInt(selectedMonthSplit[0])
     month = parseInt(selectedMonthSplit[1])
-    clearDays()
-    setDays()
+    window.location = `${year}-${month}`
 })
 
 let fillMonthSelector = function () {
-    let today = new Date()
-    let monthString = `${today.getFullYear()}-${today.getMonth() + 1}`
-    document.querySelector('#month-picker').setAttribute('value', `2024-03`)
+    document.querySelector('#month-picker').setAttribute('value', `${createMonthString()}`)
 }
 
 let setup = function () {
-    let today = new Date()
-    month = today.getMonth() + 1 //date format month goes from 0-11. add 1 so it goes from 1-12
-    year = today.getFullYear()
+    let url = window.location.href
+    let desiredMonthYear = url.split('/')[4]
+    month = desiredMonthYear.split('-')[1] //date format month goes from 0-11. add 1 so it goes from 1-12
+    year = desiredMonthYear.split('-')[0]
     fillMonthSelector()
     setDays()
 }
-
-
 
 setup()

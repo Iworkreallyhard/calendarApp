@@ -19,6 +19,9 @@
 
 <body>
     <%- body -%>
+        <% for(let script of scripts){ %>
+            <script src="<%= script %>"></script>
+            <% } %>
 </body>
 
 </html>

@@ -22,12 +22,12 @@ app.get('/', async (req, res) => {
     const events = await Event.find();
     sortByStartDate(events)
 
-    res.render('show', { events, title: 'events', styles: [] })
+    res.render('show', { events, title: 'events', styles: [], scripts: [] })
 })
 
 app.get('/new', (req, res) => {
     const dateNow = new Date()
-    res.render('new', { dateNow, title: 'new', styles: [] })
+    res.render('new', { dateNow, title: 'new', styles: [], scripts: [] })
 })
 
 app.post('/new', async (req, res) => {
@@ -44,7 +44,7 @@ app.get('/calendar', (req, res) => {
 })
 
 app.get('/month/:month', (req, res) => {
-    res.render('calendarView', { title: 'month', styles: [] })
+    res.render('calendarView', { title: 'month', styles: [], scripts: ['/js/calendarView.js'] })
 })
 
 app.get('/day/:date', async (req, res) => {
@@ -60,19 +60,19 @@ app.get('/day/:date', async (req, res) => {
             $lt: endDate
         }
     })
-    res.render('dayView', { eventsOnDay, title: date, styles: ['/css/dayView.css'] })
+    res.render('dayView', { eventsOnDay, title: date, styles: ['/css/dayView.css'], scripts: [] })
 })
 
 app.get('/:id', async (req, res) => {
     const { id } = req.params
     const event = await Event.findById(id)
-    res.render('viewIndividual', { event, title: event.name, styles: [] })
+    res.render('viewIndividual', { event, title: event.name, styles: [], scripts: [] })
 })
 
 app.get('/:id/edit', async (req, res) => {
     const { id } = req.params
     const event = await Event.findById(id)
-    res.render('edit', { event, title: event.name, styles: [] })
+    res.render('edit', { event, title: event.name, styles: [], scripts: ['/js/edit.js'] })
 })
 
 app.put('/:id', async (req, res) => {
