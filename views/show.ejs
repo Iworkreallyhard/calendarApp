@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-
-<body>
+<% layout('templates/boilerplate') %>
     <h1>All Events</h1>
     <% if(Object.keys(events).length===0){ %>
         Sorry, no events
@@ -26,6 +17,3 @@
                         <% let today=new Date() %>
                             <a href="/day/<%= `${today.getFullYear()}-${today.getMonth()+1}-${today.getDate()}` %>">day
                                 view</a>
-</body>
-
-</html>

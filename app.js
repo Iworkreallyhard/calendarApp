@@ -1,6 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const ejs = require('ejs')
+const ejsMate = require('ejs-mate')
 const bodyParser = require('body-parser')
 const path = require('path')
 const methodOverride = require('method-override')
@@ -11,6 +12,8 @@ const port = 3000
 mongoose.connect('mongodb://127.0.0.1:27017/calendarApp');
 
 app.set('view engine', 'ejs')
+app.engine('ejs', ejsMate)
+app.set('views', __dirname + '/views')
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'))
@@ -19,27 +22,29 @@ app.get('/', async (req, res) => {
     const events = await Event.find();
     sortByStartDate(events)
 
-    res.render('show', { events })
+    res.render('show', { events, title: 'events', styles: [], scripts: [] })
 })
 
 app.get('/new', (req, res) => {
     const dateNow = new Date()
-    res.render('new', { dateNow })
+    res.render('new', { dateNow, title: 'new', styles: [], scripts: [] })
 })
 
 app.post('/new', async (req, res) => {
     req.body = calculateDate(req.body)
+
     let event = new Event(req.body)
     await event.save()
     res.redirect(`/${event._id}`)
 })
 
 app.get('/calendar', (req, res) => {
-    res.redirect('/month/month')
+    let now = new Date()
+    res.redirect(`/month/${now.getFullYear()}-${now.getMonth()}`)
 })
 
 app.get('/month/:month', (req, res) => {
-    res.render('calendarView')
+    res.render('calendarView', { title: 'month', styles: [], scripts: ['/js/calendarView.js'] })
 })
 
 app.get('/day/:date', async (req, res) => {
@@ -55,20 +60,19 @@ app.get('/day/:date', async (req, res) => {
             $lt: endDate
         }
     })
-    let eventsOnDaySorted = sortByStartDate(eventsOnDay)
-    res.render('dayView', { eventsOnDay })
+    res.render('dayView', { eventsOnDay, title: date, styles: ['/css/dayView.css'], scripts: [] })
 })
 
 app.get('/:id', async (req, res) => {
     const { id } = req.params
     const event = await Event.findById(id)
-    res.render('viewIndividual', { event })
+    res.render('viewIndividual', { event, title: event.name, styles: [], scripts: [] })
 })
 
 app.get('/:id/edit', async (req, res) => {
     const { id } = req.params
     const event = await Event.findById(id)
-    res.render('edit', { event })
+    res.render('edit', { event, title: event.name, styles: [], scripts: ['/js/edit.js'] })
 })
 
 app.put('/:id', async (req, res) => {
