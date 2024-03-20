@@ -4,26 +4,35 @@
             <input type="month" name="month" id="month-picker">
         </div>
         <div class="row">
-            <div class="day-header col">Monday</div>
-            <div class="day-header col">Tuesday</div>
-            <div class="day-header col">Wednesday</div>
-            <div class="day-header col">Thursday</div>
-            <div class="day-header col">Friday</div>
-            <div class="day-header col">Saturday</div>
-            <div class="day-header col">Sunday</div>
+            <div class="day-header col d-none d-md-block">Monday</div>
+            <div class="day-header col d-none d-md-block">Tuesday</div>
+            <div class="day-header col d-none d-md-block">Wednesday</div>
+            <div class="day-header col d-none d-md-block">Thursday</div>
+            <div class="day-header col d-none d-md-block">Friday</div>
+            <div class="day-header col d-none d-md-block">Saturday</div>
+            <div class="day-header col d-none d-md-block">Sunday</div>
+            <div class="day-header-small col d-md-none">Mon</div>
+            <div class="day-header-small col d-md-none">Tue</div>
+            <div class="day-header-small col d-md-none">Wed</div>
+            <div class="day-header-small col d-md-none">Thu</div>
+            <div class="day-header-small col d-md-none">Fri</div>
+            <div class="day-header-small col d-md-none">Sat</div>
+            <div class="day-header-small col d-md-none">Sun</div>
         </div>
 
         <% let count=1 %>
 
-            <% for( let i=1; i<=7; i++) { %>
+            <% for( let i=1; i<=6; i++) { %>
                 <div class="row">
                     <% for( let j=1; j<=7; j++) { %>
                         <div class="col day">
                             <a href="" class="day-anchor"></a>
+                            <div class="events"></div>
                         </div>
 
                         <% } %>
                 </div>
 
                 <% } %>
+
     </main>

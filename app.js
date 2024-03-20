@@ -43,8 +43,16 @@ app.get('/calendar', (req, res) => {
     res.redirect(`/month/${now.getFullYear()}-${now.getMonth()}`)
 })
 
-app.get('/month/:month', (req, res) => {
-    res.render('calendarView', { title: 'month', styles: [], scripts: ['/js/calendarView.js'] })
+app.get('/month/:month', async (req, res) => {
+    let events = await Event.find({
+        startTime: {
+            $gte: StartDate
+        },
+        endTime: {
+            $lt: endDate
+        }
+    })
+    res.render('calendarView', { title: 'month', styles: ['/css/monthView.css'], scripts: ['/js/monthGlobal.js', '/js/calendarView.js'] })
 })
 
 app.get('/day/:date', async (req, res) => {

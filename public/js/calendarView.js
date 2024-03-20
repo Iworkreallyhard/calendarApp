@@ -15,6 +15,7 @@ let getDaysInMonth = function () {
 
 let setDays = function () {
     getFirstDayOfMonth()
+    //desiredFirstOfMonth = firstDay(year, month)
     getDaysInMonth()
     let date = 1
     let dayEls = document.querySelectorAll('.day .day-anchor');
@@ -77,7 +78,7 @@ let fillMonthSelector = function () {
 let setup = function () {
     let url = window.location.href
     let desiredMonthYear = url.split('/')[4]
-    month = desiredMonthYear.split('-')[1] //date format month goes from 0-11. add 1 so it goes from 1-12
+    month = desiredMonthYear.split('-')[1]
     year = desiredMonthYear.split('-')[0]
     fillMonthSelector()
     setDays()
