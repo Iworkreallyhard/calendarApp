@@ -1,0 +1,8 @@
+<% for(let event of events) {%>
+                                                    <% if(event.startTime.getDate()<==count && event.endTime.getDate()>
+                                                        == count){ %>
+                                                        <div class="event">
+                                                            <%= event.name %>
+                                                        </div>
+                                                        <% } %>
+                                                            <% } %>

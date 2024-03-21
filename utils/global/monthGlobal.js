@@ -8,7 +8,18 @@
 //     this.year = year
 // }
 
-let getDaysInMonth2 = function (year, month) {
+module.exports.createMonth = function (year, month) {
+    let createdMonth = {
+        month: month,
+        year: year,
+        daysInMonth: getDaysInMonth(year, month),
+        monthString: monthString(year, month),
+        firstDay: firstDay(year, month)
+    }
+    return createdMonth
+}
+
+let getDaysInMonth = function (year, month) {
     let lastDay = new Date(year, month, 0);
     return lastDay.getDate()
 }

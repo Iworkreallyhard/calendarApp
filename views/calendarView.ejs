@@ -1,7 +1,7 @@
 <% layout('templates/boilerplate') %>
     <main class="container">
         <div class="row">
-            <input type="month" name="month" id="month-picker">
+            <input type="month" name="month" id="month-picker" value="<%= month.monthString %>">
         </div>
         <div class="row">
             <div class="day-header col d-none d-md-block">Monday</div>
@@ -26,8 +26,29 @@
                 <div class="row">
                     <% for( let j=1; j<=7; j++) { %>
                         <div class="col day">
-                            <a href="" class="day-anchor"></a>
-                            <div class="events"></div>
+
+                            <% if((j>=month.firstDay || i!==1)&&count<=month.daysInMonth){ %>
+                                    <a href="/day/<%= `${month.monthString}-${count}` %>" class="day-anchor">
+                                        <%= count %>
+
+                                    </a>
+                                    <div class="events">
+                                        <% for(let event of events) {%>
+                                            <% if(event.startTime.getDate()<=count && event.endTime.getDate()>=
+                                                count){ %>
+                                                <div class="event">
+                                                    <%= event.name %>
+                                                </div>
+                                                <% } %>
+                                                    <% } %>
+                                    </div>
+                                    <% count++ %>
+                                        <% }else{ %>
+                                            <a href="" class="day-anchor">
+                                            </a>
+                                            <% } %>
+
+
                         </div>
 
                         <% } %>

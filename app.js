@@ -6,6 +6,7 @@ const bodyParser = require('body-parser')
 const path = require('path')
 const methodOverride = require('method-override')
 const Event = require('./models/eventSchema')
+const Month = require('./utils/global/monthGlobal')
 const app = express()
 const port = 3000
 
@@ -44,15 +45,25 @@ app.get('/calendar', (req, res) => {
 })
 
 app.get('/month/:month', async (req, res) => {
+    let yearMonth = req.url.split('/')[2].split('-')
+    let month = new Month.createMonth(yearMonth[0], yearMonth[1])
+    //console.log(month)
+    let startDate = new Date(`${month.monthString}-01`)
+    let endDate = new Date(`${month.monthString}-${month.daysInMonth}`)
+    endDate.setDate(endDate.getDate() + 1);
+    // console.log(`Start date: ${startDate}`)
+    // console.log(`end date: ${endDate}`)
     let events = await Event.find({
         startTime: {
-            $gte: StartDate
+            $lte: endDate
         },
         endTime: {
-            $lt: endDate
+            $gt: startDate
         }
     })
-    res.render('calendarView', { title: 'month', styles: ['/css/monthView.css'], scripts: ['/js/monthGlobal.js', '/js/calendarView.js'] })
+
+    //console.log(events)
+    res.render('calendarView', { title: 'month', styles: ['/css/monthView.css'], scripts: ['/js/calendarView.js'], month, events })
 })
 
 app.get('/day/:date', async (req, res) => {
